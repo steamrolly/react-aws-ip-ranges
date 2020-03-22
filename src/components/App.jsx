@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Table } from "react-bootstrap";
 import axios from "axios";
 
 class App extends Component {
@@ -30,22 +31,30 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1 className="app-title">AWS IP Ranges</h1>
+        <h2 className="app-title">AWS IP Ranges</h2>
         <p> syncToken: {this.state.syncToken}</p>
         <p> createDate: {this.state.createDate}</p>
-        <p> prefixes: </p>
-        <ul>
-          {this.state.prefixes.map(p => (
-            <li key={p.service + p.ip_prefix}>
-              {p.service} {p.ip_prefix}
-            </li>
-          ))}
-        </ul>
         <input
           type="button"
           value="Get Now"
           onClick={() => this.getAwsIpRanges()}
         />
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>IP Prefix</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.prefixes.map(p => (
+              <tr key={p.service + p.ip_prefix}>
+                <td>{p.service}</td>
+                <td>{p.ip_prefix}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   }
